@@ -44,7 +44,6 @@ public class guruTest {
     @AfterTest
     public void tearDown() {
         driver.quit ();
-        //Dummy test
 
     }
 
@@ -62,7 +61,7 @@ public class guruTest {
         Assert.assertEquals ( true, objMobilePage.mobilePageSetSortByName () );
         Assert.assertTrue ( objMobilePage.sortedProductName () );
 
-
+        System.out.println("Shilpi");
     }
 
     @Test(priority = 1)
