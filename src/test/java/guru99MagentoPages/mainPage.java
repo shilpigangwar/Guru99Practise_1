@@ -13,6 +13,7 @@ public class mainPage {
     By mainPageMobileLink = By.linkText ( "Mobile" );
     By mainPageAccountlink = By.linkText ( "Account" );
     By mainPageMyAccountLink = By.linkText ( "My Account" );
+    By logoutlink = By.linkText ( "Log Out" );
     By mainPageTvLink = By.linkText ( "TV" );
     By loginEmail = By.id ( "email" );
     By loginPassword = By.id ( "pass" );
@@ -53,6 +54,8 @@ public class mainPage {
     By updateButton = By.xpath ( "html/body/div/div/div[2]/div/div/div/form/table/tbody/tr/td[4]/button" );
     By grandtotal = By.xpath ( "html/body/div/div/div[2]/div/div/div/div[3]/div/table/tfoot/tr/td[2]/strong/span" );
 
+
+
     public mainPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -82,17 +85,25 @@ public class mainPage {
 
     public void clickMyAccountLink() {
         driver.findElement ( mainPageMyAccountLink ).click ();
+        try {
+            Thread.sleep ( 2000 );
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
     }
+    public void clickLogOutlink(){ driver.findElement ( logoutlink ).click();}
 
     public void clickTVMenu() {
         driver.findElement ( mainPageTvLink ).click ();
     }
 
-    public void enterUserEmailid(String LEmail) {
-        driver.findElement ( loginEmail ).sendKeys ( LEmail );
+    public void enterUserEmailid(String Lemail) {
+        driver.findElement ( loginEmail ).isEnabled ();
+        driver.findElement ( loginEmail ).sendKeys ( Lemail );
     }
 
     public void enterUserPassword(String LPassword) {
+
         driver.findElement ( loginPassword ).sendKeys ( LPassword );
     }
 
@@ -263,6 +274,7 @@ public class mainPage {
 
     public String ordernumberStore() {
         return driver.findElement ( orderNumber ).getText ();
+
     }
 
     public void clickMyOrder() {

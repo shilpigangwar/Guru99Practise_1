@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Parameters;
 
 /**
  * Created by Anshul on 7/6/2017.
@@ -29,31 +30,34 @@ public class createNewCustomerAccountPage {
         wait.until ( ExpectedConditions.visibilityOf ( driver.findElement ( fieldFirstName ) ) );
     }
 
-    public void enterFirstName() {
-        String Fname = "Anshul";
-        //driver.findElement ( fieldFirstName ).isEnabled ();
-        driver.findElement ( fieldFirstName ).sendKeys ( Fname );
+
+    public void enterFirstName(String DFname) {
+        driver.findElement ( fieldFirstName ).isEnabled ();
+        driver.findElement ( fieldFirstName ).sendKeys ( DFname );
     }
 
 
-    public void enterLastName() {
+    public void enterLastName(String Lname) {
         driver.findElement ( fieldLastName ).isEnabled ();
-        driver.findElement ( fieldLastName ).sendKeys ( "Sachan" );
+        driver.findElement ( fieldLastName ).sendKeys ( Lname );
     }
 
-    public void enterRegisterEmailId() {
+    public void enterRegisterEmailId(String RemailId) {
+
         driver.findElement ( registerEmailId ).isEnabled ();
-        driver.findElement ( registerEmailId ).sendKeys ( "nshul123@gmail.com" );
+        driver.findElement ( registerEmailId ).sendKeys ( RemailId);
     }
 
-    public void enterPassword() {
+    public void enterPassword(String pWord) {
+
         driver.findElement ( password1 ).isEnabled ();
-        driver.findElement ( password1 ).sendKeys ( "qaz123" );
+        driver.findElement ( password1 ).sendKeys ( pWord );
     }
 
-    public void enterConfirmationpassword() {
+    public void enterConfirmationpassword(String cPword) {
+       
         driver.findElement ( confirmationPassword ).isEnabled ();
-        driver.findElement ( confirmationPassword ).sendKeys ( "qaz123" );
+        driver.findElement ( confirmationPassword ).sendKeys ( cPword );
     }
 
     public void clickRegisterButton() {

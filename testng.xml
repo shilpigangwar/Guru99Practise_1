@@ -1,0 +1,12 @@
+<suite name = "TestNG Test Suite">
+    <test name="Regression Test">
+        <parameter name="DFname" value="John"/>
+        <parameter name="DLname" value="Albert"/>
+        <parameter name="DRemailId" value="zz2222@gmail.com"/>
+        <parameter name="DpWord" value="qaz123"/>
+        <parameter name="DcWord" value="qaz123"/>
+        <classes>
+            <class name="guru99MagentoTest.guruTest"/>
+        </classes>
+    </test>
+</suite>

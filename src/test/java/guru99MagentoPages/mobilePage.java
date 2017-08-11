@@ -3,6 +3,7 @@ package guru99MagentoPages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,14 @@ public class mobilePage {
     WebDriver driver;
     By mobilePageTitlename = By.tagName ( "title" );
     By mobilePageSortBy = By.cssSelector ( "select[title=\"Sort By\"]" );
-    By mobilePageSortOption = By.cssSelector ( "option[value=\"http://live.guru99.com/index.php/mobile.html?dir=asc&order=name\"]" );
+    //By mobilePageSortOption = By.cssSelector ( "option[value=\"http://live.guru99.com/index.php/mobile.html?dir=asc&order=name\"]" );
+    By mobilePageSortOption = By.xpath("html/body/div/div/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div/select/option[2]");
     By priceSonyExpMobileListPage = By.cssSelector ( "#product-price-1 > span.price" );
     By css = By.cssSelector ( "h2.product-name > a[title]" );
     By sonyExperiaDetailLink = By.linkText ( "Sony Xperia" );
     By sonyExperiaAddToCartlink = By.xpath ( "(//button[@type='button'])[3]" );
-    By addToCompareForSonyXperia = By.xpath ( ".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[2]/div/div[3]/ul/li[2]/a" );
-    By addToCompareForIphone = By.xpath ( ".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[3]/div/div[3]/ul/li[2]/a" );
+    By addToCompareForSonyXperia = By.xpath ( "html/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[3]/ul/li[2]/a" );
+    By addToCompareForIphone = By.xpath ( "html/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[2]/div/div[3]/ul/li[2]/a" );
     By clickCompareButton = By.cssSelector ( "div.block-content > div.actions > button.button" );
     By addToCartIphone = By.xpath ( "html/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[3]/div/div[3]/button" );
     By discountCode = By.xpath ( "html/body/div/div/div[2]/div/div/div/div[2]/form/div/div/div/input" );
@@ -39,14 +41,9 @@ public class mobilePage {
     }
 
     public boolean mobilePageSetSortByName() {
-        driver.findElement ( mobilePageSortBy ).click ();
-        driver.findElement ( mobilePageSortOption ).isEnabled ();
-        driver.findElement ( mobilePageSortOption ).click ();
-        try {
-            Thread.sleep ( 2000 );
-        } catch (InterruptedException e) {
-            e.printStackTrace ();
-        }
+        Select dropdown = new Select( driver.findElement ( mobilePageSortBy ));
+        dropdown.selectByVisibleText ( "Name" );
+
         return driver.findElement ( mobilePageSortOption ).isSelected ();
     }
 
@@ -61,9 +58,9 @@ public class mobilePage {
         }
 
         boolean isSorted = false;
-        for (int i = 0; i < nameList.size () - 1; i++) {
+        for (int i = 0; i < (nameList.size ()) - 1; i++) {
 
-            if (nameList.get ( i ).compareTo ( nameList.get ( i + 1 ) ) < 0) {
+            if (nameList.get ( i ).compareTo ( nameList.get ( i+1  ) ) < 0) {
                 isSorted = true;
             } else {
                 isSorted = false;
@@ -100,6 +97,12 @@ public class mobilePage {
 
     public void addToCompareTwoProducts() {
         driver.findElement ( addToCompareForSonyXperia ).click ();
+        try {
+            Thread.sleep ( 1000 );
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
+
         driver.findElement ( addToCompareForIphone ).click ();
         try {
             Thread.sleep ( 1000 );

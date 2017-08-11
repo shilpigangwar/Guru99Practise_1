@@ -5,9 +5,7 @@ import guru99MagentoPages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 
 /**
@@ -24,6 +22,7 @@ public class guruTest {
     tvPage objtvPage;
 
 
+
     @BeforeTest
     public void setup() {
         System.setProperty ( "webdriver.gecko.driver", "C:\\Users\\Anshul\\Downloads\\geckodriver-v0.17.0-win32\\geckodriver.exe" );
@@ -36,9 +35,7 @@ public class guruTest {
         objprodCom = new prodComparisonListPage ( driver );
         objCreateAccount = new createNewCustomerAccountPage ( driver );
         objtvPage = new tvPage ( driver );
-
-
-    }
+            }
 
 
     @AfterTest
@@ -76,7 +73,7 @@ public class guruTest {
         //Read the value of sony Experia from detail page
         System.out.println ( "Value on Mobile Detail page is " + objSonyExpDetailPage.priceSonyExperiaOnMobileDetailPage () );
         //compare the values of sony experia on both the pages
-        Assert.assertEquals ( "Values is not equal", objSonyExpDetailPage.priceSonyExperiaOnMobileDetailPage (), objMobilePage.PriceSonyExperiaOnMobilListPage () );
+        Assert.assertTrue (objSonyExpDetailPage.priceSonyExperiaOnMobileDetailPage ().equals ( objMobilePage.PriceSonyExperiaOnMobilListPage () ));
 
     }
 
@@ -120,19 +117,20 @@ public class guruTest {
         //driver.close();
     }
 
-    @Test(priority = 4)
-    public void createAccountShareWishList() throws InterruptedException {
 
+    @Parameters({"DFname","DLname","DRemailId","DpWord","DcWord"})
+    @Test(priority = 4)
+    public void createAccountShareWishList(String DFname, String DLname, String DRemailId, String DpWord, String DcWord ) throws InterruptedException {
         //click on my Account link
         objMainPage.clickAccountLink ();
         objMainPage.clickMyAccountLink ();
         //Click Create Account Link and Fill New user information except Email Id
         objCreateAccount.clickCreateAccountButton ();
-        objCreateAccount.enterFirstName ();
-        objCreateAccount.enterLastName ();
-        objCreateAccount.enterRegisterEmailId ();
-        objCreateAccount.enterPassword ();
-        objCreateAccount.enterConfirmationpassword ();
+        objCreateAccount.enterFirstName (DFname);
+        objCreateAccount.enterLastName (DLname);
+        objCreateAccount.enterRegisterEmailId (DRemailId);
+        objCreateAccount.enterPassword (DpWord);
+        objCreateAccount.enterConfirmationpassword (DcWord);
         //Click register
         objCreateAccount.clickRegisterButton ();
         //Verify registration is done
@@ -150,17 +148,20 @@ public class guruTest {
         //Check wishList is shared
         Assert.assertTrue ( objtvPage.sharewishlistConfirmationMessageDisplayed () );
         System.out.println ( "Message displayed:" + objtvPage.sharewishlistConfirmationMessageText () );
+        objMainPage.clickAccountLink ();
+        objMainPage.clickLogOutlink ();
     }
 
     @Test(priority = 5)
-    public void userPurchaseProductWithRegisteredEmailId() {
+    @Parameters({"DRemailId","DpWord"})
+    public void userPurchaseProductWithRegisteredEmailId(String DRemailId, String DpWord) {
 
         //click on my Account link
         objMainPage.clickAccountLink ();
         objMainPage.clickMyAccountLink ();
         //Login application using created credentials
-        objMainPage.enterUserEmailid ( "nshul123@gmail.com" );
-        objMainPage.enterUserPassword ( "qaz123" );
+        objMainPage.enterUserEmailid (DRemailId);
+        objMainPage.enterUserPassword (DpWord);
         objMainPage.clickLoginButton ();
         //Click on My Wish list Link
         objMainPage.clickUserMyWishlistLink ();
@@ -200,18 +201,21 @@ public class guruTest {
         //verify order is generated and note the order number
         Assert.assertTrue ( objMainPage.orderNumberGenerated () == true );
         System.out.println ( "Your order # is:" + objMainPage.ordernumberStore () );
+        objMainPage.clickAccountLink ();
+        objMainPage.clickLogOutlink ();
 
     }
 
     @Test(priority = 6)
-    public void savePreviousOrderAsPDF() {
+    @Parameters({"DRemailId","DpWord"})
+    public void savePreviousOrderAsPDF(String DRemailId, String DpWord) {
 
         //click on my Account Link
         objMainPage.clickAccountLink ();
         objMainPage.clickMyAccountLink ();
         //Login to application using previously created credentials
-        objMainPage.enterUserEmailid ( "nshul123@gmail.com" );
-        objMainPage.enterUserPassword ( "qaz123" );
+        objMainPage.enterUserEmailid ( DRemailId);
+        objMainPage.enterUserPassword (DpWord );
         objMainPage.clickLoginButton ();
         //verify previously created order is displayed in recent Orders table and Status is Pending
         Assert.assertTrue ( objMainPage.recentOrdersPresent () == true );
@@ -222,19 +226,22 @@ public class guruTest {
         //Click on view Orders
         objMainPage.clickViewOrder ();
         //Click on Print Order link
-        objMainPage.clickPrintOrderLink ();
+       // objMainPage.clickPrintOrderLink ();
+        objMainPage.clickAccountLink ();
+        objMainPage.clickLogOutlink ();
         //Verify Order is saved as PDF
     }
 
     @Test(priority = 7)
-    public void changeOrReorderProduct() {
+    @Parameters({"DRemailId","DpWord"})
+    public void changeOrReorderProduct(String DRemailId, String DpWord) {
 
         //click on my Account Link
         objMainPage.clickAccountLink ();
         objMainPage.clickMyAccountLink ();
         //Login to application using previously created credentials
-        objMainPage.enterUserEmailid ( "nshul123@gmail.com" );
-        objMainPage.enterUserPassword ( "qaz123" );
+        objMainPage.enterUserEmailid (DRemailId );
+        objMainPage.enterUserPassword ( DpWord);
         objMainPage.clickLoginButton ();
         //click on Reorder and change the quantity and click update
         objMainPage.clickReorderlink ();
@@ -262,6 +269,8 @@ public class guruTest {
         objMainPage.clickPlaceOrderButton ();
         Assert.assertTrue ( objMainPage.orderNumberGenerated () == true );
         System.out.println ( "Your order # is:" + objMainPage.ordernumberStore () );
+        objMainPage.clickAccountLink ();
+        objMainPage.clickLogOutlink ();
 
     }
 
